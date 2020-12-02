@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  *  Copyright (c) 2008 Dustin Spicuzza <dustin@virtualroadside.com>
  *
@@ -25,6 +26,8 @@
  *	Based on "The R*-Tree: An Efficient and Robust Access Method for Points 
  *	and Rectangles" by N. Beckmann, H.P. Kriegel, R. Schneider, and B. Seeger
  */
+=======
+>>>>>>> 第一次修改
 
 
 #ifndef RSTARTREE_H
@@ -74,7 +77,11 @@ struct RStarNode : BoundedItem {
 	\brief Implementation of an RTree with an R* index
 	
 	@tparam LeafType		type of leaves stored in the tree
+<<<<<<< HEAD
 	@tparam dimensions  	number of dimensions the bounding boxes are described in
+=======
+	@tparam dimensions  	number of dimensions the bounding boxes are described in  ά��
+>>>>>>> 第一次修改
 	@tparam	min_child_items m, in the range 2 <= m < M
 	@tparam max_child_items M, in the range 2 <= m < M
 	@tparam	RemoveLeaf 		A functor used to remove leaves from the tree
@@ -106,7 +113,11 @@ public:
 	// default constructor
 	RStarTree() : m_root(NULL), m_size(0) 
 	{
+<<<<<<< HEAD
 		assert(1 <= min_child_items && min_child_items <= max_child_items/2);
+=======
+		//assert(1 <= min_child_items && min_child_items <= max_child_items/2);
+>>>>>>> 第一次修改
 	}
 	
 	// destructor
@@ -120,8 +131,11 @@ public:
 	// Single insert function, adds a new item to the tree
 	void Insert(LeafType leaf, const BoundingBox &bound)
 	{
+<<<<<<< HEAD
 		// ID1: Invoke Insert starting with the leaf level as a
 		// parameter, to Insert a new data rectangle
+=======
+>>>>>>> 第一次修改
 		Leaf * newLeaf = new Leaf();
 		newLeaf->bound = bound;
 		newLeaf->leaf  = leaf;
@@ -145,6 +159,7 @@ public:
 	}
 
 	
+<<<<<<< HEAD
 	/*
 		This is an interpretation of the bulk insert algorithm described
 		in "Improving Performance with Bulk-Inserts in Oracle R-Trees" 
@@ -199,6 +214,9 @@ public:
 		See RStarVisitor.h for more information about the various visitor
 		types available.
 		
+=======
+	/**	
+>>>>>>> 第一次修改
 		@param acceptor 		An acceptor functor that returns true if this 
 		branch or leaf of the tree should be considered for visitation.
 		
@@ -209,8 +227,13 @@ public:
 		visited). It returns by value, so ensure that the copy is cheap
 		for decent performance.
 	*/
+<<<<<<< HEAD
 	template <typename Acceptor, typename Visitor>
 	Visitor Query(const Acceptor &accept, Visitor visitor)
+=======
+	template <typename Acceptor, typename Visitor>    
+	Visitor Query(const Acceptor &accept, Visitor visitor)             
+>>>>>>> 第一次修改
 	{
 		if (m_root)
 		{	
@@ -223,14 +246,18 @@ public:
 
 	
 	/**
+<<<<<<< HEAD
 		\brief Removes item(s) from the tree. 
 		
 		See RStarVisitor.h for more information about the various visitor
 		types available.
+=======
+>>>>>>> 第一次修改
 		
 		@param acceptor 	A node acceptor functor that returns true if this 
 		branch or leaf of the tree should be considered for deletion 
 		(it does not delete it, however. That is what the LeafRemover does).
+<<<<<<< HEAD
 		
 		@param leafRemover		A visitor functor that decides whether that 
 		individual item should be removed from the tree. If it returns true, 
@@ -239,6 +266,14 @@ public:
 		See also RemoveBoundedArea, RemoveItem for examples of how this
 		function can be called.
 	*/
+=======
+
+		@param leafRemover		A visitor functor that decides whether that 
+		individual item should be removed from the tree. If it returns true, 
+		then the node holding that item will be deleted.
+	*/
+	//Has called in RemoveBoundedArea and Removeitem      
+>>>>>>> 第一次修改
 	template <typename Acceptor, typename LeafRemover>
 	void Remove( const Acceptor &accept, LeafRemover leafRemover)
 	{
@@ -247,17 +282,26 @@ public:
 		if (!m_root)
 			return;
 		
+<<<<<<< HEAD
 		RemoveFunctor<Acceptor, LeafRemover> remove(accept, leafRemover, &itemsToReinsert, &m_size);
+=======
+		RemoveFunctor<Acceptor, LeafRemover> remove(accept, leafRemover, &itemsToReinsert, &m_size);   
+>>>>>>> 第一次修改
 		remove(m_root, true);
 		
 		if (!itemsToReinsert.empty())
 		{
+<<<<<<< HEAD
 			// reinsert anything that needs to be reinserted
 			typename std::list< Leaf* >::iterator it = itemsToReinsert.begin();
 			typename std::list< Leaf* >::iterator end = itemsToReinsert.end();
 		
 			// TODO: do this whenever that actually works.. 
 			// BulkInsert(itemsToReinsert, m_root);
+=======
+			typename std::list< Leaf* >::iterator it = itemsToReinsert.begin();
+			typename std::list< Leaf* >::iterator end = itemsToReinsert.end();
+>>>>>>> 第一次修改
 			
 			for(;it != end; it++)
 				InsertInternal(*it, m_root);
@@ -284,21 +328,31 @@ public:
 	
 protected:
 	
+<<<<<<< HEAD
 	// choose subtree: only pass this items that do not have leaves
 	// I took out the loop portion of this algorithm, so it only
 	// picks a subtree at that particular level
 	Node * ChooseSubtree(Node * node, const BoundingBox * bound)
 	{
 		// If the child pointers in N point to leaves 
+=======
+	//Has changed 
+	Node * ChooseSubtree(Node * node, const BoundingBox * bound)  
+	{
+>>>>>>> 第一次修改
 		if (static_cast<Node*>(node->items[0])->hasLeaves)
 		{
 			// determine the minimum overlap cost
 			if (max_child_items > (RTREE_CHOOSE_SUBTREE_P*2)/3  && node->items.size() > RTREE_CHOOSE_SUBTREE_P)
 			{
+<<<<<<< HEAD
 				// ** alternative algorithm:
 				// Sort the rectangles in N in increasing order of
 				// then area enlargement needed to include the new
 				// data rectangle
+=======
+			//if the count of items is big enough,then choose 1/3 of them to reinsert
+>>>>>>> 第一次修改
 				
 				// Let A be the group of the first p entrles
 				std::partial_sort( node->items.begin(), node->items.begin() + RTREE_CHOOSE_SUBTREE_P, node->items.end(), 
@@ -335,6 +389,7 @@ protected:
 	}
 	
 	
+<<<<<<< HEAD
 	// inserts nodes recursively. As an optimization, the algorithm steps are
 	// way out of order. :) If this returns something, then that item should
 	// be added to the caller's level of the tree
@@ -350,16 +405,33 @@ protected:
 		if (node->hasLeaves)
 		{
 			// I2: If N has less than M items, accommodate E in N
+=======
+	//Its recursive calls are very confusing, and I'm trying to figure out a way to optimize it
+
+	Node * InsertInternal(Leaf * leaf, Node * node, bool firstInsert = true)
+	{
+		//adjust the node
+		node->bound.stretch(leaf->bound);
+	
+	
+		if (node->hasLeaves)
+		{
+			//add the leaf
+>>>>>>> 第一次修改
 			node->items.push_back(leaf);
 		}
 		else
 		{
+<<<<<<< HEAD
 			// I1: Invoke ChooseSubtree. with the level as a parameter,
 			// to find an appropriate node N, m which to place the
 			// new leaf E
 		
 			// of course, this already does all of that recursively. we just need to
 			// determine whether we need to split the overflow or not
+=======
+			//Recursive call the InsertInternal
+>>>>>>> 第一次修改
 			Node * tmp_node = InsertInternal( leaf, ChooseSubtree(node, &leaf->bound), firstInsert );
 			
 			if (!tmp_node)
@@ -374,17 +446,22 @@ protected:
 		// level of N as a parameter [for reinsertion or split]
 		if (node->items.size() > max_child_items )
 		{
+<<<<<<< HEAD
 			
 			// I3: If OverflowTreatment was called and a split was
 			// performed, propagate OverflowTreatment upwards
 			// if necessary
 			
 			// This is implicit, the rest of the algorithm takes place in there
+=======
+			//return the overflow nodes.
+>>>>>>> 第一次修改
 			return OverflowTreatment(node, firstInsert);
 		}
 			
 		return NULL;
 	}
+<<<<<<< HEAD
 	
 
 	// TODO: probably could just merge this in with InsertInternal()
@@ -393,6 +470,15 @@ protected:
 		// OT1: If the level is not the root level AND this is the first
 		// call of OverflowTreatment in the given level during the 
 		// insertion of one data rectangle, then invoke Reinsert
+=======
+
+
+	//Select a path with minimal overlap
+	Node * OverflowTreatment(Node * level, bool firstInsert)
+	{
+		//if the node is the first time that has been reinsert
+		//to optimize the structure of tree
+>>>>>>> 第一次修改
 		if (level != m_root && firstInsert)
 		{
 			Reinsert(level);
@@ -412,15 +498,22 @@ protected:
 			newRoot->items.push_back(m_root);
 			newRoot->items.push_back(splitItem);
 			
+<<<<<<< HEAD
 			// Do I4 here for the new root item
 			newRoot->bound.reset();
 			for_each(newRoot->items.begin(), newRoot->items.end(), StretchBoundingBox<BoundedItem>(&newRoot->bound));
 			
 			// and we're done
+=======
+			newRoot->bound.reset();
+			for_each(newRoot->items.begin(), newRoot->items.end(), StretchBoundingBox<BoundedItem>(&newRoot->bound));
+			
+>>>>>>> 第一次修改
 			m_root = newRoot;
 			return NULL;
 		}
 
+<<<<<<< HEAD
 		// propagate it upwards
 		return splitItem;
 	}
@@ -429,6 +522,11 @@ protected:
 	// one function as an optimization (they all share data structures,
 	// so it would be pointless to do all of that copying)
 	//
+=======
+		return splitItem;
+	}
+	
+>>>>>>> 第一次修改
 	// This returns a node, which should be added to the items of the
 	// passed node's parent
 	Node * Split(Node * node)
@@ -449,6 +547,7 @@ protected:
 		assert(distribution_count > 0);
 		assert(min_child_items + distribution_count-1 <= n_items);
 		
+<<<<<<< HEAD
 		// S1: Invoke ChooseSplitAxis to determine the axis,
 		// perpendicular to which the split 1s performed
 		// S2: Invoke ChooseSplitIndex to determine the best
@@ -458,6 +557,10 @@ protected:
 		// at the end of the loop
 		
 		// CSA1: For each axis
+=======
+
+		//ChooseSplitAxis  return for  split_index
+>>>>>>> 第一次修改
 		for (std::size_t axis = 0; axis < dimensions; axis++)
 		{
 			// initialize per-loop items
@@ -465,6 +568,7 @@ protected:
 			double overlap = 0, dist_area, dist_overlap;
 			std::size_t dist_edge = 0, dist_index = 0;
 		
+<<<<<<< HEAD
 			dist_area = dist_overlap = std::numeric_limits<double>::max();
 			
 			
@@ -478,14 +582,23 @@ protected:
 			for (std::size_t edge = 0; edge < 2; edge++)
 			{
 				// sort the items by the correct key (upper edge, lower edge)
+=======
+			dist_area = dist_overlap = std::numeric_limits<double>::max();		
+		
+			for (std::size_t edge = 0; edge < 2; edge++)
+			{
+>>>>>>> 第一次修改
 				if (edge == 0)
 					std::sort(node->items.begin(), node->items.end(), SortBoundedItemsByFirstEdge<BoundedItem>(axis));
 				else
 					std::sort(node->items.begin(), node->items.end(), SortBoundedItemsBySecondEdge<BoundedItem>(axis));
+<<<<<<< HEAD
 		
 				// Distributions: pick a point m in the middle of the thing, call the left
 				// R1 and the right R2. Calculate the bounding box of R1 and R2, then 
 				// calculate the margins. Then do it again for some more points	
+=======
+>>>>>>> 第一次修改
 				for (std::size_t k = 0; k < distribution_count; k++)
 		        {
 					double area = 0;
@@ -498,6 +611,7 @@ protected:
 					R2.reset();
 					for_each(node->items.begin()+(min_child_items+k+1), node->items.end(), StretchBoundingBox<BoundedItem>(&R2));
 					
+<<<<<<< HEAD
 					
 					// calculate the three values
 					margin 	+= R1.edgeDeltas() + R2.edgeDeltas();
@@ -511,6 +625,16 @@ protected:
 					if (overlap < dist_overlap || (overlap == dist_overlap && area < dist_area))
 					{
 						// if so, store the parameters that allow us to recreate it at the end
+=======
+
+					margin 	+= R1.edgeDeltas() + R2.edgeDeltas();
+					area 	+= R1.area() + R2.area();		//Caculate the area so that we can choose a best split index, but it will cost some time
+					overlap =  R1.overlap(R2);
+					
+					//updata the best split index
+					if (overlap < dist_overlap || (overlap == dist_overlap && area < dist_area))
+					{
+>>>>>>> 第一次修改
 						dist_edge = 	edge;
 						dist_index = 	min_child_items+k;
 						dist_overlap = 	overlap;
@@ -519,11 +643,15 @@ protected:
 				}
 			}
 			
+<<<<<<< HEAD
 			// CSA2: Choose the axis with the minimum S as split axis
+=======
+>>>>>>> 第一次修改
 			if (split_axis == dimensions+1 || split_margin > margin )
 			{
 				split_axis 		= axis;
 				split_margin 	= margin;
+<<<<<<< HEAD
 				split_edge 		= dist_edge;
 				split_index 	= dist_index;
 			}
@@ -535,6 +663,14 @@ protected:
 		// axis has been recorded, so we just have to recreate it and
 		// return the correct index
 		
+=======
+				split_edge 	= dist_edge;
+				split_index 	= dist_index;
+			}
+		}
+		
+		//ChooseSplitIndex change the source node and return the new node  
+>>>>>>> 第一次修改
 		if (split_edge == 0)
 			std::sort(node->items.begin(), node->items.end(), SortBoundedItemsByFirstEdge<BoundedItem>(split_axis));
 
@@ -558,6 +694,10 @@ protected:
 	
 	// This routine is used to do the opportunistic reinsertion that the
 	// R* algorithm calls for
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 第一次修改
 	void Reinsert(Node * node)
 	{
 		std::vector< BoundedItem* > removed_items;
@@ -570,6 +710,7 @@ protected:
 		// of the bounding rectangle of N
 		assert(n_items == max_child_items + 1);
 		
+<<<<<<< HEAD
 		// RI2: Sort the items in increasing order of their distances
 		// computed in RI1
 		std::partial_sort(node->items.begin(), node->items.end() - p, node->items.end(), 
@@ -586,6 +727,20 @@ protected:
 		// RI4: In the sort, defined in RI2, starting with the 
 		// minimum distance (= close reinsert), invoke Insert 
 		// to reinsert the items
+=======
+		std::partial_sort(node->items.begin(), node->items.end() - p, node->items.end(), 
+			SortBoundedItemsByDistanceFromCenter<BoundedItem>(&node->bound));
+			
+		// Remove the last p items from N
+		removed_items.assign(node->items.end() - p, node->items.end());
+		node->items.erase(node->items.end() - p, node->items.end());
+		
+		// adjust the bounding rectangle of N
+		node->bound.reset();
+		for_each(node->items.begin(), node->items.end(), StretchBoundingBox<BoundedItem>(&node->bound));
+		
+		//the firstinser is flase!
+>>>>>>> 第一次修改
 		for (typename std::vector< BoundedItem* >::iterator it = removed_items.begin(); it != removed_items.end(); it++)
 			InsertInternal( static_cast<Leaf*>(*it), m_root, false);
 	}

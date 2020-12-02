@@ -1,6 +1,7 @@
 R* Tree for C++
 ===============
 
+<<<<<<< HEAD
 In 2008 I created this R* Tree implementation in C++. My goal for this
 implementation was as follows:
 
@@ -24,8 +25,19 @@ License
 =======
 
 GNU Lesser Public License v2.1
+=======
+* 我对代码和注释的内容做出了一些改变，但为了与原来的代码和注释风格项匹配，我并没有将注释改为中文。
+  但我对一些主要的功能做了一份中文的文档。
+
+* I made some changes to the content of the code and comments, but I didn't change the comments to Chinese in order to match the original code and comment style items.
+  But I made a document in Chinese for some of the main functions.
+>>>>>>> 第一次修改
 
 Author
 ======
 
+<<<<<<< HEAD
 Dustin Spicuzza (dustin@virtualroadside.com)
+=======
+original author: Dustin Spicuzza (dustin@virtualroadside.com)
+>>>>>>> 第一次修改
