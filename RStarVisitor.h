@@ -1,53 +1,14 @@
-<<<<<<< HEAD
-/*
- *  Copyright (c) 2008 Dustin Spicuzza <dustin@virtualroadside.com>
- *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of version 2.1 of the GNU Lesser General Public
- *  License as published by the Free Software Foundation.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
- * 
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
- 
-=======
 
->>>>>>> 第一次修改
  #ifndef RSTARVISITOR_H
  #define RSTARVISITOR_H
  
  #include "RStarBoundingBox.h"
  
-<<<<<<< HEAD
- /**
-	\file
-	
-	I'm not convinced that these are really the best way to implement
-	this, but it works so I'll stick with it for the moment
-	
-	It should be noted that all of these items are typedef'ed inside 
-	of the RStarTree class, so you shouldn't generally need to
-	directly use them. 
- */
- 
-
-/********************************************************************
- * These are all 'acceptor' functors used for queries and removals, 
- * which will have the following characteristics:
- *
-=======
 //Acceptors
 //To judge the leaf or node is selected
 /*Functor: The new feature of C++ */
 
 /********************************************************************
->>>>>>> 第一次修改
  * template<typename Node, typename Leaf>
  *
  *	bool operator()(const Node * node)
@@ -55,15 +16,7 @@
  *
  *	bool operator()(const Leaf * leaf)
  *		-- returns true if this leaf should be visited
-<<<<<<< HEAD
- *
- * This class of functions should be easy to copy, and are expected 
- * to be const. They are only used to determine whether something 
- * should be visited, and not do the actual visiting.
- * 
-=======
 
->>>>>>> 第一次修改
  ********************************************************************/
 
 // returns true if the node overlaps the specified bound
@@ -96,11 +49,7 @@ struct RStarAcceptEnclosing
 	
 	bool operator()(const Node * const node) const 
 	{ 
-<<<<<<< HEAD
-		return m_bound.overlaps(node->bound);
-=======
 		return m_bound.overlaps(node->bound);   
->>>>>>> 第一次修改
 	}
 	
 	bool operator()(const Leaf * const leaf) const 
@@ -122,12 +71,6 @@ struct RStarAcceptAny
  
  
 /********************************************************************
-<<<<<<< HEAD
- * These are all 'visitor' styled functions -- even though these are
- * specifically targeted for removal tasks, visitor classes are 
- * specified exactly the same way. 
-=======
->>>>>>> 第一次修改
  *
  * bool operator()(RStarLeaf<LeafType, dimensions> * leaf)
  * 		-- Removal: if returns true, then remove the node
@@ -138,24 +81,10 @@ struct RStarAcceptAny
  *		is not guaranteed that the operator() will not be called, so
  *		items may be removed/visited after this is set to false
  *
-<<<<<<< HEAD
- * You may modify the items that the leaf points to, but under no
- * circumstance should the bounds of the item be modified (since
- * that would screw up the tree). 
- * 
- ********************************************************************/
- 
- 
-/*
-	Default functor used to delete nodes from the R* tree. You can specify 
-	a different functor to use, as long as it has the same signature as this. 
-*/
-=======
  ********************************************************************/
  
  
 
->>>>>>> 第一次修改
 template <typename Leaf>
 struct RStarRemoveLeaf{
 
@@ -177,11 +106,7 @@ struct RStarRemoveSpecificLeaf
 	mutable bool ContinueVisiting;
 	bool m_remove_duplicates;
 	const typename Leaf::leaf_type &m_leaf;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 第一次修改
 	explicit RStarRemoveSpecificLeaf(const typename Leaf::leaf_type &leaf, bool remove_duplicates = false) : 
 		ContinueVisiting(true), m_remove_duplicates(remove_duplicates), m_leaf(leaf) {}
 		

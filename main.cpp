@@ -1,32 +1,13 @@
-<<<<<<< HEAD
-/*
- *  Copyright (c) 2008 Dustin Spicuzza <dustin@virtualroadside.com>
- *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of version 2.1 of the GNU Lesser General Public
- *  License as published by the Free Software Foundation.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Lesser General Public License for more details.
- * 
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- */
-
-=======
 /******************************************************
 *Readme
 *The comments and part of the code have been modified by @mumuqiao
 *The purpose is to make it easy for me to read it and use its functions
 *if you want an explanation for major functions in Chinese
+*ÎÒ¶Ô´úÂëºÍ×¢ÊÍµÄÄÚÈÝ×ö³öÁËÒ»Ð©¸Ä±ä£¬µ«ÎªÁËÓëÔ­À´µÄ´úÂëºÍ×¢ÊÍ·ç¸ñÏîÆ¥Åä£¬ÎÒ²¢Ã»ÓÐ½«×¢ÊÍ¸ÄÎªÖÐÎÄ¡£
+*µ«ÎÒ¶ÔÒ»Ð©Ö÷ÒªµÄ¹¦ÄÜ×öÁËÒ»·ÝÖÐÎÄµÄÎÄµµ¡£¼´RStarTree.docx
 *Please go to https://github.com/Mumuqiao/r-star-tree
-* or view my blog and contract me 
-* https://joewu.top
+* or view my blog and contract me https://joewu.top	
 *********************************************************/
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 
 #include <string>
 #include <ctime>
@@ -34,15 +15,6 @@
 #include <stdio.h>
 #include "RStarTree.h"
 
-<<<<<<< HEAD
-#define RANDOM_DATASET
-//#define GUTTMAN_DATASET
-
-#ifdef RANDOM_DATASET
-	typedef RStarTree<int, 2, 32, 64> 			RTree;
-#else
-	typedef RStarTree<std::string, 2, 2, 3> 	RTree;
-=======
 //#define RANDOM_DATASET
 //#define GUTTMAN_DATASET
 #define MY_DATASET
@@ -52,7 +24,6 @@
 	typedef RStarTree<std::string, 2, 2, 3> 	RTree;
 #elif defined(MY_DATASET)
 	typedef RStarTree<std::string, 4, 2, 3> 	RTree;
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 #endif
 
 typedef RTree::BoundingBox			BoundingBox;
@@ -63,22 +34,14 @@ BoundingBox bounds(int x, int y, int w, int h)
 	BoundingBox bb;
 	
 	bb.edges[0].first  = x;
-<<<<<<< HEAD
-	bb.edges[0].second = x + w;
-	
-=======
 	bb.edges[0].second = x + w; 
 	 
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 	bb.edges[1].first  = y;
 	bb.edges[1].second = y + h;
 	
 	return bb;
 }
 
-<<<<<<< HEAD
-
-=======
 BoundingBox bounds(int x, int y, int w, int h, int m, int n, int p, int q)
 {
 	BoundingBox bb;
@@ -99,7 +62,6 @@ BoundingBox bounds(int x, int y, int w, int h, int m, int n, int p, int q)
 }
 
 //do something when visting
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 struct Visitor {
 	int count;
 	bool ContinueVisiting;
@@ -112,11 +74,8 @@ struct Visitor {
 		//std::cout << "Visiting " << count << std::endl;
 #elif defined( GUTTMAN_DATASET )
 		std::cout << "#" << count << ": visited " << leaf->leaf << " with bound " << leaf->bound.ToString() << std::endl;	
-<<<<<<< HEAD
-=======
 #elif defined(MY_DATASET)
 		std::cout << "#" << count << ": visited " << leaf->leaf << " with bound " << leaf->bound.ToString() << std::endl;
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 #else
 		#error "Undefined dataset"
 #endif
@@ -130,13 +89,7 @@ int main(int argc, char ** argv)
 {
 	RTree tree;
 	Visitor x;
-<<<<<<< HEAD
-	
-	// insert a bunch of items into the tree
-	// Note: this dataset is the one shown on Guttman's original paper
-=======
 	std::vector<int> aa;
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 #ifdef GUTTMAN_DATASET
 	tree.Insert( "R8" , bounds( 1,5   , 3,2 ));
 	//tree.Print("I1");
@@ -173,31 +126,6 @@ int main(int argc, char ** argv)
 	
 	BoundingBox bound = bounds( 5,10, 5,5 );
 	
-<<<<<<< HEAD
-	std::cout << "Searching in " << bound.ToString() << std::endl;
-	x = tree.Query(RTree::AcceptOverlapping(bound), Visitor());
-	std::cout << "Visited " << x.count << " nodes." << std::endl;
-	
-	tree.RemoveBoundedArea(bound);
-	
-	// stretch the bounds a bit
-	
-	std::cout << "Searching in " << bound.ToString() << std::endl;
-	x = tree.Query(RTree::AcceptOverlapping(bound), Visitor());
-	std::cout << "Visited " << x.count << " nodes." << std::endl;
-	
-	BoundingBox bound2 = bounds(0,10, 10,10);
-	std::cout << "Removing enclosed area " << bound2.ToString() << std::endl;
-	tree.RemoveBoundedArea(bound2);
-	
-	std::cout << "Searching in " << bound.ToString() << std::endl;
-	x = tree.Query(RTree::AcceptOverlapping(bound), Visitor());
-	std::cout << "Visited " << x.count << " nodes." << std::endl;
-	
-	
-	Visitor y = tree.Query(RTree::AcceptAny(), Visitor());
-	std::cout << "Visited " << y.count << " nodes." << std::endl;
-=======
 	std::cout << "²éÑ¯ " << bound.ToString() << std::endl;
 	x = tree.Query(RTree::AcceptOverlapping(bound), Visitor());
 	std::cout << "±éÀúÁË " << x.count << " ¸ö½Úµã\n" << std::endl;
@@ -218,14 +146,10 @@ int main(int argc, char ** argv)
 
 	Visitor y = tree.Query(RTree::AcceptAny(), Visitor());
 	std::cout << "±éÀúÁË " << y.count << " ¸ö½Úµã\n" << std::endl;
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 	
 	
 #endif
 	
-<<<<<<< HEAD
-
-=======
 #ifdef MY_DATASET
 	tree.Insert("R8", bounds(1, 5, 3, 2, 7, 4, 2, 6));
 	tree.Insert("R9", bounds(6, 1, 2, 2, 10, 4, 5, 1));
@@ -258,7 +182,6 @@ int main(int argc, char ** argv)
 	Visitor y = tree.Query(RTree::AcceptAny(), Visitor());
 	std::cout << "·ÃÎÊÁË " << y.count << " ¸ö½Úµã." << std::endl;
 #endif
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 #ifdef RANDOM_DATASET
 	srand(time(0));
 
@@ -273,23 +196,6 @@ int main(int argc, char ** argv)
 	BoundingBox bound = bounds( 100,100, 300,400 );
 	
 	x = tree.Query(RTree::AcceptAny(), Visitor());
-<<<<<<< HEAD
-	std::cout << "AcceptAny: " << x.count << " nodes visited (" << tree.GetSize() << " nodes in tree)" << std::endl;
-	
-	
-	std::cout << "Searching in " << bound.ToString() << std::endl;
-	x = tree.Query(RTree::AcceptEnclosing(bound), Visitor());
-	std::cout << "Visited " << x.count << " nodes (" << tree.GetSize() << " nodes in tree)" << std::endl;
-	
-	std::cout << "Removing enclosed area " << bound.ToString() << std::endl;
-	tree.RemoveBoundedArea(bound);
-	
-	std::cout << "Searching in " << bound.ToString() << std::endl;
-	x = tree.Query(RTree::AcceptEnclosing(bound), Visitor());
-	std::cout << "Visited " << x.count << " nodes. (" << tree.GetSize() << " nodes in tree)" << std::endl;
-	
-	//tree.Print();
-=======
 	std::cout << "¹²ËÑË÷µ½ÁË" << x.count <<"¸ö½Úµã" << "Ê÷ÖÐÓÐ" << tree.GetSize() << "¸ö½Úµã " << std::endl;
 	
 	
@@ -305,7 +211,6 @@ int main(int argc, char ** argv)
 	std::cout << "ÕÒµ½ÁË" << x.count << " ¸ö½Úµã. (" << tree.GetSize() << " ¸ö½ÚµãÔÚÊ÷ÖÐ)" << std::endl;
 	
 
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 		
 #endif
 
@@ -315,39 +220,5 @@ int main(int argc, char ** argv)
 }
 
 
-<<<<<<< HEAD
-/*
-
-http://donar.umiacs.umd.edu/quadtree/rectangles/cifquad.html
-
-1.0 5.0  3.0 2.0
-6.0 1.0  2.0 2.0
-6.0 4.0 2.0 2.0
-9.0 0.0  2.0 14.0
-13.0 1.0  1.0 9.0
-12.0 5.0  2.0 2.0
-0.0 16.0  2.0 2.0
-3.0 11.0  6.0 7.0
-14.0 10.0  7.0 4.0
-16.0 8.0  2.0 9.0
-17.0 12.0  3.0 3.0
-
-
-
-Insert-BoundingBox{(1.0,5.0)(4.0,7.0)}
-Insert-BoundingBox{(6.0,1.0)(8.0,3.0)}
-Insert-BoundingBox{(6.0,4.0)(8.0,6.0)}
-Insert-BoundingBox{(9.0,0.0)(11.0,14.0)}
-Insert-BoundingBox{(13.0,1.0)(14.0,1.0)}
-Insert-BoundingBox{(12.0,5.0)(14.0,7.0)}
-Insert-BoundingBox{(0.0,16.0)(2.0,18.0)}
-Insert-BoundingBox{(3.0,11.0)(9.0,18.0)}
-Insert-BoundingBox{(14.0,10.0)(21.0,14.0)}
-Insert-BoundingBox{(16.0,8.0)(18.0,17.0)}
-Insert-BoundingBox{(17.0,12.0)(20.0,15.0)}
-
-*/
-=======
->>>>>>> ç¬¬ä¸€æ¬¡ä¿®æ”¹
 
 
